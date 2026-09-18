@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <title>OpenLayers kaart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.2.4/ol.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Avaleht</a>
+  <a href="leaflet.html">LeafletJS</a>
+  <a href="openlayers.html">OpenLayers</a>
+  <a href="vordlus.html">Võrdlus</a>
+</nav>
+
+<main>
+  <h1>OpenLayers kaart</h1>
+  <div id="map"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/ol@v9.2.4/dist/ol.js"></script>
+<script>
+  var kmlAllikas = new ol.source.Vector({
+    url: 'AnastasiiaRadashevakaart.kml',
+    format: new ol.format.KML()
+  });
+  var kmlKiht = new ol.layer.Vector({ source: kmlAllikas });
+
+  var osmKiht = new ol.layer.Tile({ source: new ol.source.OSM() });
+
+  var map = new ol.Map({
+    target: 'map',
+    layers: [osmKiht, kmlKiht],
+    view: new ol.View({
+      center: ol.proj.fromLonLat([24.7352, 59.4210]),
+      zoom: 14
+    })
+  });
+
+  kmlAllikas.once('featuresloadend', function () {
+    map.getView().fit(kmlAllikas.getExtent(), { padding: [30, 30, 30, 30] });
+  });
+
+  map.addControl(new ol.control.ScaleLine());
+
+  var popupDiv = document.createElement('div');
+  popupDiv.className = 'info-box';
+  var popup = new ol.Overlay({ element: popupDiv });
+  map.addOverlay(popup);
+
+  map.on('click', function (evt) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function (f) { return f; });
+    if (feature) {
+      popupDiv.innerHTML = feature.get('name') || 'Objekt';
+      popup.setPosition(evt.coordinate);
+    } else {
+      popup.setPosition(undefined);
+    }
+  });
+</script>
+
+</body>
+</html>
