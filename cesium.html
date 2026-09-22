@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <title>CesiumJS 3D kaart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.120/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <style>
+    #cesiumContainer { width: 100%; height: 600px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Avaleht</a>
+  <a href="leaflet.html">LeafletJS</a>
+  <a href="openlayers.html">OpenLayers</a>
+  <a href="cesium.html">CesiumJS (3D)</a>
+  <a href="vordlus.html">Võrdlus</a>
+</nav>
+<main>
+  <h1>CesiumJS 3D kaart</h1>
+  <button id="toggle-btn">Peida/näita KML</button>
+  <button id="toggle-buildings-btn">Peida/näita 3D hooned</button>
+  <div id="cesiumContainer"></div>
+</main>
+
+<script src="https://cesium.com/downloads/cesiumjs/releases/1.120/Build/Cesium/Cesium.js"></script>
+<script src="script/cesium.js"></script>
+
+</body>
+</html>
